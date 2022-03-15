@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { ref, defineEmits } from "vue";
+import { ref } from "vue";
+import { TodoItem } from "../interfaces";
 const title = ref("");
 const details = ref("");
 
 const emit = defineEmits(["add"]);
 
 function postTodo() {
-  const todo = {
+  const todo: TodoItem = {
     title: title.value,
     details: details.value,
+    done: false,
   };
   emit("add", todo);
   title.value = "";

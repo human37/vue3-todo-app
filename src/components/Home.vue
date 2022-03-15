@@ -1,24 +1,15 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { TodoItem } from "../interfaces";
 import Maker from "./Maker.vue";
 import Todo from "./Todo.vue";
-import { ref } from "vue";
 
 defineProps<{ msg: string }>();
 
-interface TodoItem {
-  title: string;
-  details: string;
-  done: boolean;
-}
-
 const todosList = ref<TodoItem[]>([]);
 
-function handleAdd(todo: { title: string; details: string }) {
-  todosList.value.push({
-    title: todo.title,
-    details: todo.details,
-    done: false,
-  });
+function handleAdd(todo: TodoItem) {
+  todosList.value.push(todo);
 }
 function handleDelete(index: number) {
   todosList.value.splice(index, 1);
