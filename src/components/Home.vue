@@ -8,6 +8,8 @@ defineProps<{ msg: string }>();
 
 const todosList = ref<TodoItem[]>([]);
 
+const lightMode = ref<boolean>(true);
+
 function handleAdd(todo: TodoItem) {
   todosList.value.push(todo);
 }
@@ -17,23 +19,36 @@ function handleDelete(index: number) {
 function handleDone(index: number) {
   todosList.value[index].done = !todosList.value[index].done;
 }
+function handleModeSwitch() {
+  lightMode.value = !lightMode.value;
+  const page = document.querySelector<HTMLElement>("body")!;
+  page.style.backgroundColor = lightMode.value ? "#fff" : "#000";
+  page.style.color = lightMode.value ? "#fff !important" : "#000";
+}
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-  <section>
-    <Maker id="maker" @add="handleAdd" />
-  </section>
-  <p v-for="todo in todosList">
-    <Todo
-      id="todo"
-      :title="todo.title"
-      :details="todo.details"
-      :done="todo.done"
-      @delete="handleDelete"
-      @done="handleDone"
-    />
-  </p>
+  <div id="wrapper">
+    <h1>{{ msg }}</h1>
+    <h3>
+      <button @click="handleModeSwitch">
+        {{ lightMode ? "dark mode?" : "light mode?" }}
+      </button>
+    </h3>
+    <section>
+      <Maker id="maker" @add="handleAdd" />
+    </section>
+    <p v-for="todo in todosList">
+      <Todo
+        id="todo"
+        :title="todo.title"
+        :details="todo.details"
+        :done="todo.done"
+        @delete="handleDelete"
+        @done="handleDone"
+      />
+    </p>
+  </div>
 </template>
 
 <style scoped>
@@ -46,12 +61,6 @@ label {
   font-weight: bold;
 }
 
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
-}
 #maker {
   margin-left: auto;
   margin-right: auto;
