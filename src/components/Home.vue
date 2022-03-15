@@ -23,7 +23,7 @@ function handleModeSwitch() {
   lightMode.value = !lightMode.value;
   const page = document.querySelector<HTMLElement>("body")!;
   page.style.backgroundColor = lightMode.value ? "#fff" : "#000";
-  page.style.color = lightMode.value ? "#fff !important" : "#000";
+  page.style.color = lightMode.value ? "#000" : "#fff";
 }
 </script>
 
